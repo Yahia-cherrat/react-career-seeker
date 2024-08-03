@@ -1,25 +1,33 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { FaMapMarker } from 'react-icons/fa';
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { FaMapMarker } from 'react-icons/fa'
+
+type Company = {
+  name: string
+  description: string
+  contactEmail: string
+  contactPhone: string
+}
 
 export type Job = {
-  id: string;
-  type: string;
-  title: string;
-  description: string;
-  salary: string;
-  location: string;
-};
+  id: string
+  type: string
+  title: string
+  description: string
+  salary: string
+  location: string
+  company: Company
+}
 
 export type JobListingProps = {
-  job: Job;
-};
+  job: Job
+}
 
 const JobListing: React.FC<JobListingProps> = ({ job }) => {
-  const [showFullDesc, setShowFullDesc] = useState(false);
-  let description: string = job.description;
+  const [showFullDesc, setShowFullDesc] = useState(false)
+  let description: string = job.description
   if (!showFullDesc) {
-    description = description.substring(0, 150) + '...';
+    description = description.substring(0, 150) + '...'
   }
 
   return (
@@ -54,7 +62,7 @@ const JobListing: React.FC<JobListingProps> = ({ job }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default JobListing;
+export default JobListing
