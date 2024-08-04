@@ -11,11 +11,11 @@ type Company = {
 
 export type Job = {
   id: string
-  type: string
   title: string
+  type: string
   description: string
-  salary: string
   location: string
+  salary: string
   company: Company
 }
 
@@ -24,7 +24,7 @@ export type JobListingProps = {
 }
 
 const JobListing: React.FC<JobListingProps> = ({ job }) => {
-  const [showFullDesc, setShowFullDesc] = useState(false)
+  const [showFullDesc, setShowFullDesc] = useState<boolean>(false)
   let description: string = job.description
   if (!showFullDesc) {
     description = description.substring(0, 150) + '...'

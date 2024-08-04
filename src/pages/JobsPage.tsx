@@ -2,6 +2,7 @@ import JobListning from "../components/JobListning"
 import jobs from '../jobs.json'
 import { Job } from '../components/JobListning'
 
+
 const JobsPage = () => {
   const recentJobs: Job[] = jobs.jobs
 

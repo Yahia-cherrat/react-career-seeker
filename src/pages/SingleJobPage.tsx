@@ -1,13 +1,26 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import Spinner from '../components/Spinner'
 import { Job } from '../components/JobListning'
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
-const SingleJobPage = () => {
+const SingleJobPage: React.FC<{ deleteJob: (jobId: string) => void }> = ({ deleteJob }) => {
     const { id } = useParams<{ id: string }>()
     const [job, setJob] = useState<Job | null>(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState<boolean>(true)
+
+    const navigate = useNavigate()
+
+    const onDeleteJob = (jobId: string) => {
+        const confirm = window.confirm('Are you sure you want to delete this job?')
+        if(!confirm) return
+        deleteJob(jobId)
+        toast.success(`Job deleted successfully`,{
+            pauseOnHover: false,
+        })
+        navigate(`/jobs`)
+    }
 
     useEffect(() => {
         const fetchJob = async () => {
@@ -75,12 +88,20 @@ const SingleJobPage = () => {
                             </div>
                             <div className="bg-white p-6 rounded-lg shadow-md mt-6">
                                 <h3 className="text-xl font-bold mb-6">Manage Job</h3>
-                                <Link
-                                    to={`/jobs/edit/${job?.id}`}
-                                    className="bg-indigo-500 hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
-                                        Edit Job
-                                </Link>
-                                <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">Delete Job</button>
+                                {job && (
+                                    <>
+                                        <Link
+                                            to={`/edit-job/${job?.id}`}
+                                            className="bg-indigo-500 hover:bg-indigo-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+                                                Edit Job
+                                        </Link>
+                                        <button 
+                                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block" 
+                                            onClick={ () => onDeleteJob(job?.id) }>
+                                                Delete Job
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </aside>
                     </div>

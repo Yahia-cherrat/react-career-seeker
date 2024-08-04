@@ -5,7 +5,7 @@ import Spinner from './Spinner'
 const JobsListing: React.FC<{ isHome?: boolean }> = ({ isHome = false }) => {
 
   const [jobs, setJobs] = useState<Job[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchJobs = async () => {
